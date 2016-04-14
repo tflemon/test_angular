@@ -6,16 +6,16 @@ var myApp = angular.module('mainModule', ['ngResource','ui.bootstrap']);
         var callURL = (withSuccess ? "resource-server.php" : "invalid-url.php");
 
         var serverResource = $resource(callURL, {
-          param1: "param1 default",
-          param2: "param2 default"
+          param1: "param1 default",  //userid
+          param2: "param2 default"   //ToDo
         });
         var getConfig = {};
-        if ($scope.getParam1 !== undefined && $scope.getParam1 != "") {
-          getConfig.param1 = $scope.getParam1;
-        }
-        if ($scope.getParam2 !== undefined && $scope.getParam2 != "") {
-          getConfig.param2 = $scope.getParam2;
-        }
+        //if ($scope.getParam1 !== undefined && $scope.getParam1 != "") {
+        //  getConfig.param1 = $scope.getParam1;
+        //}
+        //if ($scope.getParam2 !== undefined && $scope.getParam2 != "") {
+        //  getConfig.param2 = $scope.getParam2;
+        //}
 
         serverResource.get(getConfig,
           function (value, responseHeaders) {
