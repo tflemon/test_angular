@@ -9,23 +9,6 @@ app.controller('todoListController', ['$scope','ToDoList',
         { content: "8/4までに海水浴に行く", status: 'yet'}
       ];
 
-      var oldContent;     // 編集前の要件
-      $scope.editing = null; // 編集モードの ToDo モデルを表すモデル
-
-      //編集モード
-      $scope.editToDo = function (todoForm) {
-        if (todoForm.$invalid) {
-          $scope.editing.content = oldContent;
-        }
-        $scope.editing = oldContent = null;
-      };
-
-      //編集内容を反映
-      $scope.submitEditToDo = function (todo) {
-        oldContent = todo.content;
-        $scope.editing = todo;
-      };
-
      // ToDo追加
 		$scope.createToDo = function() {
 			var create = new ToDoList();
@@ -38,6 +21,44 @@ app.controller('todoListController', ['$scope','ToDoList',
 		 }
 		 );
 		};
+
+    /*//ToDo編集
+     var oldContent;     // 編集前のcontent
+     $scope.editing = null;
+     $scope.editToDo = function (todoForm) {
+       if (todoForm.$invalid) {
+         $scope.editing.content = oldContent;
+       }
+       $scope.editing = oldContent = null;
+     };
+     //編集内容を反映
+     $scope.submitEditToDo = function (todo) {
+       oldContent = todo.content;
+       $scope.editing = todo;
+     }; */
+
+     //ToDo編集
+      var oldContent;     // 編集前のcontent
+      $scope.editing = null;
+      $scope.editToDo = function (todoForm) {
+        var edit = new ToDoList();
+        //TODO useridとtodoidを取得
+        edit.$edit(function() {
+          console.log("$edit success");
+          if (todoForm.$invalid) {
+            $scope.editing.content = oldContent;
+          }
+          $scope.editing = oldContent = null;
+        }, function(err) {
+          console.log("edit error");
+        }
+      );
+      };
+      //編集内容を反映
+      $scope.submitEditToDo = function (todo) {
+        oldContent = todo.content;
+        $scope.editing = todo;
+      };
 
 		 /* ToDo編集
 		$scope.editToDo = function() {
@@ -54,31 +75,26 @@ app.controller('todoListController', ['$scope','ToDoList',
 		};
 		*/
 
-		 /*
 		 //ToDo削除
 		 $scope.deleteToDo = function() {
 			 //TODO userid, todoidを取得
 			 var cancel = new ToDoList();
 			 //TODO todoidを取得
 			 //delete.todoid = '1';
-		 	cancel.$cancel(function() {
+       console.log("cancel success");
+		 	cancel.$delete(function() {
 				 console.log("cancel success");
 		 	}, function(err) {
 				 console.log("delete error");
 			   }
 			);
 		};
-		*/
+
   }
 ])//;
 
-.directive('mySelect', [function () {
+.directive('editSelect', [function () {
   return function (scope, $el, attrs) {
-    // scope - 現在の $scope オブジェクト
-    // $el   - jqLite オブジェクト(jQuery ライクオブジェクト)
-    //         jQuery 使用時なら jQuery オブジェクト
-    // attrs - DOM 属性のハッシュ(属性名は正規化されている)
-
     scope.$watch(attrs.mySelect, function (val) {
       if (val) {
         $el[0].select();
