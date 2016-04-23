@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo アプリ</title>
+</head>
+<body ng-app="App">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-resource.min.js"></script>
+  <script src="app.js"></script>
+	<script src="sankou.js"></script>
+	<script src="sample.json"></script>
+
+<div ng-controller="index">
+	<button ng-click="getUser()">Get User</button>
+	Name: <input ng-model="user.name" />
+	Email: <input ng-model="user.email" />
+	<button ng-click="postUser()">Post User</button>
+	<button ng-click="Post()">Post</button>
+</div>
+
+<a ui-sref="newMovie" class="btn-primary btn-lg nodecoration">Add New Movie</a>
+
+<table class="table movietable">
+  <tr>
+    <td><h3>All Movies</h3></td>
+    <td></td>
+  </tr>
+  <tr ng-repeat="movie in movies">
+    <td>{{movie.title}}</td>
+    <td>
+      <a class="btn btn-primary" ui-sref="viewMovie({id:movie._id})">View</a>
+      <a class="btn btn-danger"  ng-click="deleteMovie(movie)">Delete</a>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
